@@ -2,39 +2,24 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { DataInterface } from '../Interface/DataInterface';
+import { DataInterface } from '../Interface/data.Interface';
 
 @Injectable({
   providedIn: 'root',
 })
-export class MvoviesService {
+export class MoviesService {
   private APIkey: string = environment.APIkey;
   private UrlMovie: string = environment.UrlMovie;
 
   constructor(private http: HttpClient) {}
 
-  getTopRateMovie(): Observable<DataInterface> {
+  getMovies(orderType: string, pageCount?: number): Observable<DataInterface> {
     return this.http.get<DataInterface>(
-      `${this.UrlMovie}top_rated?${this.APIkey}&language=en-US&page=1`
+      `${this.UrlMovie}${orderType}?${this.APIkey}&language=en-US&page=${pageCount}`
     );
   }
 
-  getPopularMovie(): Observable<DataInterface> {
-    return this.http.get<DataInterface>(
-      `${this.UrlMovie}popular?${this.APIkey}&language=en-US&page`
-    );
+  getGenre():Observable<any> {
+    return this.http.get(`https://api.themoviedb.org/3/genre/movie/list?${this.APIkey}&language=en-US`);
   }
-
-  getUpcomingMovie(): Observable<DataInterface> {
-    return this.http.get<DataInterface>(
-      `${this.UrlMovie}upcoming?${this.APIkey}&language=en-US&page`
-    );
-  }
-  getNowplayingMovie(): Observable<DataInterface> {
-    return this.http.get<DataInterface>(
-      `${this.UrlMovie}now_playing?${this.APIkey}&language=en-US&page`
-    );
-  }
-
-  
 }
