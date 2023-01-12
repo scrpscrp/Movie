@@ -10,6 +10,7 @@ import { tvShowDataInterface } from '../Interface/tvShow-data.interface';
 export class TvShowService {
   private APIkey: string = environment.APIkey;
   private UrlTvShow: string = environment.UrlTvShow;
+  private urlGenres: string = environment.urlGenres;
 
   constructor(private http: HttpClient) {}
 
@@ -17,6 +18,10 @@ export class TvShowService {
     return this.http.get<tvShowDataInterface>(
       `${this.UrlTvShow}${orderType}?${this.APIkey}&language=en-US&page=${pageCount}`
     );
+  }
+
+  getGenres():Observable<any>{
+    return this.http.get(`${this.urlGenres}${this.APIkey}&language=en-US`);
   }
   // getTvShowAiringToday(): Observable<tvShowDataInterface> {
   //   return this.http.get<tvShowDataInterface>(

@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HttpClientModule } from '@angular/common/http';
-
+import { ReactiveFormsModule } from '@angular/forms';
 import { MoviesComponent } from './movies/movies.component';
 import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { ActorsComponent } from './actors/actors.component';
@@ -36,6 +36,7 @@ import { TvShowComponent } from './tv-show/tv-show.component';
     RouterModule,
     AppRoutingModule,
     VirtualScrollerModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

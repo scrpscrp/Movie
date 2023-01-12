@@ -2,13 +2,25 @@
   <div class="filter">
     <h2>{{ title }}</h2>
     <div class="filter2">
-      <!-- <button (click)="filter()">FILTER</button> -->
+      <button (click)="filter()">FILTER</button>
       <button (click)="resetFilter()">RESET FILTER</button>
+      <form [formGroup]="form" (ngSubmit)="submitForm()" novalidate>
+        <div *ngFor="let data of Data; let i=index">
+          <label>
+            <input type="checkbox" [value]="data.id" (change)="onCheckboxChange($event)" />
+            {{data.name}}
+          </label>
+        </div>
+        <p class="error" *ngIf="this.form.controls['checkArray'].errors?.['required']">
+          Checkbox is required, select atleast one value.
+        </p>
+        <input type="submit" value="Submit">
+      </form>
     </div>
   </div>
   <div class="cards-container">
-    <ng-container *ngIf="(filterMovies$ | async) as filterMovies">
-      <div *ngFor="let movie of filterMovies">
+    <ng-container *ngIf="!filterMovies.length; else filteredMoviesExist">
+      <div *ngFor="let movie of movies">
         <app-cards
           [title]="movie.title"
           [date]="movie.release_date"
@@ -18,6 +30,18 @@
         </app-cards>
       </div>
     </ng-container>
-    <!-- <button (click)="loadMore()">Load more</button> -->
+    <ng-template #filteredMoviesExist>
+      <div *ngFor="let movie of filterMovies">
+        <app-cards
+          [title]="movie.title"
+          [date]="movie.release_date"
+          [poster_path]="movie.poster_path"
+          [vote_average]="movie.vote_average"
+        >
+        </app-cards>
+      </div>
+    </ng-template>
+
+    <button (click)="loadMore()">Load more</button>
   </div>
 </div>
